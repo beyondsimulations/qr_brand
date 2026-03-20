@@ -6,7 +6,7 @@
 
 const PALETTE = {
   flame: "#FF4008", gothic: "#65888C", porsche: "#E3B068", contessa: "#C26A6A",
-  thunder: "#4E4B49", black: "#212123", snow: "#FFFBFA", chardon: "#FAEDE1"
+  thunder: "#4E4B49", black: "#212123"
 };
 
 const ECC = {

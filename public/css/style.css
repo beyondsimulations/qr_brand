@@ -78,8 +78,8 @@ body {
 
 .card {
   background: var(--snow);
-  border: 1.5px solid #e8ddd2;
-  border-radius: 16px;
+  border: 1px solid #e8ddd2;
+  border-radius: 3px;
   padding: 18px;
 }
 
@@ -110,7 +110,7 @@ body {
   width: 3px;
   height: 12px;
   background: var(--flame);
-  border-radius: 2px;
+  border-radius: 0;
 }
 
 .mini-label {
@@ -134,10 +134,10 @@ body {
 
 input[type="text"] {
   background: var(--snow);
-  border: 1.5px solid #ddd3c8;
+  border: 1px solid #ddd3c8;
   color: var(--black);
   padding: 10px 13px;
-  border-radius: 10px;
+  border-radius: 2px;
   font-size: 13px;
   font-family: 'JetBrains Mono', monospace;
   width: 100%;
@@ -172,7 +172,7 @@ input[type="range"]::-webkit-slider-thumb {
 .btn {
   padding: 10px 20px;
   border: none;
-  border-radius: 10px;
+  border-radius: 2px;
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
@@ -199,7 +199,7 @@ input[type="range"]::-webkit-slider-thumb {
 .btn-ghost {
   background: var(--snow);
   color: var(--thunder);
-  border: 1.5px solid #ddd3c8;
+  border: 1px solid #ddd3c8;
 }
 
 .btn-ghost:hover {
@@ -212,9 +212,9 @@ input[type="range"]::-webkit-slider-thumb {
 .tab-bar {
   display: flex;
   background: var(--snow);
-  border-radius: 10px;
+  border-radius: 2px;
   padding: 3px;
-  border: 1.5px solid #e8ddd2;
+  border: 1px solid #e8ddd2;
 }
 
 .tab-btn {
@@ -226,7 +226,7 @@ input[type="range"]::-webkit-slider-thumb {
   font-size: 11px;
   font-weight: 600;
   cursor: pointer;
-  border-radius: 8px;
+  border-radius: 2px;
   font-family: 'JetBrains Mono', monospace;
   transition: all 0.15s;
   letter-spacing: 0.5px;
@@ -245,10 +245,10 @@ input[type="range"]::-webkit-slider-thumb {
 
 .opt-btn {
   padding: 7px 4px;
-  border: 1.5px solid #ddd3c8;
+  border: 1px solid #ddd3c8;
   background: var(--snow);
   color: var(--gothic);
-  border-radius: 8px;
+  border-radius: 2px;
   cursor: pointer;
   font-size: 9px;
   font-family: 'JetBrains Mono', monospace;
@@ -281,8 +281,8 @@ input[type="range"]::-webkit-slider-thumb {
 /* ─── Upload Slots ─────────────────────────── */
 
 .upload-slot {
-  border: 1.5px dashed #ccc2b6;
-  border-radius: 12px;
+  border: 1px dashed #ccc2b6;
+  border-radius: 3px;
   padding: 10px;
   text-align: center;
   cursor: pointer;
@@ -317,7 +317,7 @@ input[type="range"]::-webkit-slider-thumb {
   right: 4px;
   width: 20px;
   height: 20px;
-  border-radius: 50%;
+  border-radius: 2px;
   background: rgba(194,106,106,0.12);
   color: var(--contessa);
   border: none;
@@ -343,8 +343,8 @@ input[type="range"]::-webkit-slider-thumb {
 .color-swatch {
   width: 32px;
   height: 32px;
-  border-radius: 8px;
-  border: 1.5px solid #ddd3c8;
+  border-radius: 2px;
+  border: 1px solid #ddd3c8;
   overflow: hidden;
   position: relative;
   flex-shrink: 0;
@@ -363,10 +363,10 @@ input[type="range"]::-webkit-slider-thumb {
 
 .hex-input {
   background: var(--snow);
-  border: 1.5px solid #ddd3c8;
+  border: 1px solid #ddd3c8;
   color: var(--black);
   padding: 6px 10px;
-  border-radius: 8px;
+  border-radius: 2px;
   font-size: 12px;
   font-family: 'JetBrains Mono', monospace;
   width: 96px;
@@ -465,7 +465,7 @@ input[type="range"]::-webkit-slider-thumb {
   align-items: center;
   gap: 4px;
   padding: 3px 10px;
-  border-radius: 6px;
+  border-radius: 2px;
   font-family: 'JetBrains Mono', monospace;
   font-size: 10px;
 }
@@ -479,8 +479,8 @@ input[type="range"]::-webkit-slider-thumb {
 
 .preview-card {
   background: var(--snow);
-  border: 1.5px solid #e8ddd2;
-  border-radius: 20px;
+  border: 1px solid #e8ddd2;
+  border-radius: 3px;
   padding: 24px;
   display: flex;
   flex-direction: column;
@@ -492,7 +492,7 @@ input[type="range"]::-webkit-slider-thumb {
 
 .preview-card #qrPreview svg {
   max-width: 100%;
-  border-radius: 12px;
+  border-radius: 2px;
   display: block;
 }
 
@@ -507,7 +507,7 @@ input[type="range"]::-webkit-slider-thumb {
 
 .scan-badge {
   padding: 8px 14px;
-  border-radius: 8px;
+  border-radius: 2px;
   font-family: 'JetBrains Mono', monospace;
   font-size: 11px;
   display: flex;
@@ -534,10 +534,10 @@ input[type="range"]::-webkit-slider-thumb {
 .export-opt {
   flex: 1;
   padding: 7px 0;
-  border: 1.5px solid #ddd3c8;
+  border: 1px solid #ddd3c8;
   background: var(--snow);
   color: var(--gothic);
-  border-radius: 8px;
+  border-radius: 2px;
   cursor: pointer;
   font-size: 11px;
   font-family: 'JetBrains Mono', monospace;
@@ -560,7 +560,7 @@ input[type="range"]::-webkit-slider-thumb {
 .palette-btn {
   width: 28px;
   height: 28px;
-  border-radius: 6px;
+  border-radius: 2px;
   cursor: pointer;
   transition: transform 0.1s;
   border: none;
