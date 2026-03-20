@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QR × Brand</title>
+  <meta name="description" content="Free branded QR code generator with custom shapes, colors, icons, and logo support. Export as PNG, SVG, or PDF.">
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+  <header class="header">
+    <h1>QR × Brand</h1>
+    <p>Branded QR codes · custom shapes · SVG / PNG / PDF</p>
+  </header>
+
+  <div class="layout">
+    <!-- LEFT PANEL -->
+    <div class="left-panel">
+
+      <!-- URL + ECC -->
+      <div class="card">
+        <div class="sec-label">Destination & ECC</div>
+        <input type="text" id="urlInput" value="https://beyondsimulations.com" placeholder="https://your-brand.com">
+        <div class="mini-label mt-10">Error correction level</div>
+        <div class="grid-2" id="eccGrid"></div>
+        <button class="btn btn-accent mt-10" onclick="generateQR()">Generate QR</button>
+      </div>
+
+      <!-- Tabs -->
+      <div class="tab-bar" id="tabBar"></div>
+
+      <!-- Icons Tab -->
+      <div class="card tab-content" id="tab-icons">
+        <div class="sec-label">Scatter Icons (<span id="iconCount">0</span>/3)</div>
+        <p class="card-desc">
+          PNG, JPG, or SVG. These replace random data dots in the QR code.
+        </p>
+        <div class="grid-3" id="iconSlots"></div>
+        <div class="mt-10">
+          <div class="slider-header">
+            <span class="mini-label">Replace <span id="replaceLabel">15</span>% of dots</span>
+            <span id="dangerPill" class="pill" style="display:none"></span>
+          </div>
+          <input type="range" id="replaceSlider" min="0" max="100" value="15" oninput="onReplaceChange()">
+          <div class="danger-track">
+            <div class="danger-safe" id="safeBar"></div>
+            <div class="danger-risk" id="riskBar"></div>
+          </div>
+          <div class="range-labels">
+            <span>0%</span>
+            <span id="eccLimitLabel">ECC-H: 30%</span>
+            <span>100%</span>
+          </div>
+        </div>
+        <div class="mt-8">
+          <div class="mini-label">Icon scale: <span id="scaleLabel">1.1</span>&times;</div>
+          <input type="range" id="scaleSlider" min="0.5" max="2.5" step="0.1" value="1.1" oninput="onScaleChange()">
+        </div>
+      </div>
+
+      <!-- Logo Tab -->
+      <div class="card tab-content hidden" id="tab-logo">
+        <div class="sec-label">Center Logo</div>
+        <p class="card-desc">
+          Independent from scatter icons. Sits in a cleared zone with adjustable padding.
+        </p>
+        <div class="toggle-row">
+          <span>Enable center logo</span>
+          <button class="toggle on" id="logoToggle" onclick="toggleCenterLogo()"></button>
+        </div>
+        <label class="upload-slot" id="logoSlot">
+          <input type="file" accept="image/*" style="display:none" onchange="onLogoUpload(event)">
+          <span class="plus">+</span>
+          <span class="label">PNG / JPG / SVG</span>
+        </label>
+        <div id="logoControls">
+          <div class="mt-8">
+            <div class="mini-label">Logo size: <span id="logoSizeLabel">20</span>%</div>
+            <input type="range" id="logoSizeSlider" min="8" max="38" value="20" oninput="onLogoSizeChange()">
+          </div>
+          <div class="mt-8">
+            <div class="mini-label">Clear padding: <span id="logoPadLabel">2</span> modules</div>
+            <input type="range" id="logoPadSlider" min="0" max="6" step="1" value="2" oninput="onLogoPadChange()">
+            <p class="hint">Extra cleared modules around the logo prevent dots from being cut off.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Shapes Tab -->
+      <div class="card tab-content hidden" id="tab-shapes">
+        <div class="sec-label">Dot Shape</div>
+        <div class="grid-4" id="dotShapeGrid"></div>
+        <div class="sec-label mt-12">Finder Pattern</div>
+        <div class="grid-4" id="finderShapeGrid"></div>
+      </div>
+
+      <!-- Colors Tab -->
+      <div class="card tab-content hidden" id="tab-colors">
+        <div class="sec-label">Colors</div>
+        <div>
+          <div class="mini-label">Foreground</div>
+          <div class="color-row">
+            <div class="color-swatch" id="fgSwatch">
+              <input type="color" id="fgPicker" value="#212123" oninput="onFgPicker()">
+            </div>
+            <input class="hex-input" id="fgHex" value="#212123" oninput="onFgHex()">
+          </div>
+        </div>
+        <div class="mt-8">
+          <div class="mini-label">Background</div>
+          <div class="color-row">
+            <div class="color-swatch" id="bgSwatch">
+              <input type="color" id="bgPicker" value="#ffffff" oninput="onBgPicker()">
+            </div>
+            <input class="hex-input" id="bgHex" value="#ffffff" oninput="onBgHex()">
+          </div>
+        </div>
+        <div class="mt-10">
+          <div class="mini-label mb-8">Quick palette</div>
+          <div class="palette" id="paletteGrid"></div>
+        </div>
+        <p class="hint mt-8">Click a swatch to set foreground. Type any hex code. Keep strong contrast for reliable scanning.</p>
+      </div>
+    </div>
+
+    <!-- RIGHT PANEL -->
+    <div>
+      <div class="preview-card">
+        <div id="qrPreview"></div>
+        <canvas id="qrCanvas" style="display:none"></canvas>
+        <div class="status-row" id="statusRow"></div>
+        <button class="btn btn-ghost" onclick="testScan()">Test Scannability</button>
+        <div id="scanResult"></div>
+        <div class="w-full">
+          <div class="mini-label mb-5">Export as</div>
+          <div class="export-row" id="exportRow"></div>
+          <button class="btn btn-accent" onclick="doExport()">Download <span id="exportLabel">PNG</span></button>
+        </div>
+        <p class="empty-hint" id="emptyHint">Upload brand icons or a center logo<br>to customize your QR code</p>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <p>
+      Provided by <a href="https://beyondsimulations.com" target="_blank" rel="noopener">BeyondSimulations</a>
+      · <a href="https://beyondsimulations.com/imprint" target="_blank" rel="noopener">Imprint</a>
+    </p>
+  </footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

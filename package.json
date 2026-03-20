@@ -1,0 +1,14 @@
+{
+  "name": "qr-x-brand",
+  "version": "1.0.0",
+  "description": "Branded QR code generator with custom shapes, colors, and logo support",
+  "private": true,
+  "scripts": {
+    "dev": "wrangler pages dev public",
+    "deploy": "wrangler pages deploy public --project-name=qrbrand"
+  },
+  "devDependencies": {
+    "wrangler": "^3.0.0"
+  },
+  "license": "MIT"
+}
