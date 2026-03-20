@@ -697,21 +697,38 @@ function renderCanvas() {
 function testScan() {
   const resultEl = $("scanResult");
   if (!window.jsQR) {
-    resultEl.innerHTML = '<div class="scan-badge scan-fail">jsQR library not loaded</div>'; // eslint-disable-line no-unsanitized/property
+    resultEl.innerHTML = '<div class="scan-badge scan-fail">jsQR library not loaded</div>'; // eslint-disable-line no-unsanitized/property -- static string
     return;
   }
-  resultEl.innerHTML = '<div class="scan-badge scan-wait">Scanning\u2026</div>'; // eslint-disable-line no-unsanitized/property
+  resultEl.innerHTML = '<div class="scan-badge scan-wait">Scanning\u2026</div>'; // eslint-disable-line no-unsanitized/property -- static string
   setTimeout(() => {
     try {
       const canvas = $("qrCanvas");
-      const ctx = canvas.getContext("2d");
-      const img = ctx.getImageData(0, 0, canvas.width, canvas.height);
-      const code = jsQR(img.data, canvas.width, canvas.height);
-      resultEl.innerHTML = code // eslint-disable-line no-unsanitized/property
+
+      // Scale up and binarize to help jsQR handle styled/colored QR codes
+      const scale = 3;
+      const w = canvas.width, h = canvas.height;
+      const tmpCanvas = document.createElement("canvas");
+      tmpCanvas.width = w * scale;
+      tmpCanvas.height = h * scale;
+      const tmpCtx = tmpCanvas.getContext("2d");
+      tmpCtx.imageSmoothingEnabled = false;
+      tmpCtx.drawImage(canvas, 0, 0, w * scale, h * scale);
+
+      const img = tmpCtx.getImageData(0, 0, w * scale, h * scale);
+      const d = img.data;
+      for (let i = 0; i < d.length; i += 4) {
+        const lum = d[i] * 0.299 + d[i + 1] * 0.587 + d[i + 2] * 0.114;
+        const v = lum < 128 ? 0 : 255;
+        d[i] = v; d[i + 1] = v; d[i + 2] = v; d[i + 3] = 255;
+      }
+
+      const code = jsQR(d, w * scale, h * scale, { inversionAttempts: "attemptBoth" });
+      resultEl.innerHTML = code // eslint-disable-line no-unsanitized/property -- static string
         ? '<div class="scan-badge scan-ok">\u2713 Scan OK \u2014 QR is readable</div>'
         : '<div class="scan-badge scan-fail">\u2717 Failed \u2014 reduce replacement % or increase ECC</div>';
     } catch (e) {
-      resultEl.innerHTML = '<div class="scan-badge scan-fail">\u2717 Scan error</div>'; // eslint-disable-line no-unsanitized/property
+      resultEl.innerHTML = '<div class="scan-badge scan-fail">\u2717 Scan error</div>'; // eslint-disable-line no-unsanitized/property -- static string
     }
   }, 200);
 }
