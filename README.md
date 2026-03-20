@@ -49,4 +49,4 @@ In the Cloudflare Pages dashboard, add a custom domain (e.g., `qrbrand.byndsim.c
 
 ## License
 
-[MIT](LICENSE) — provided by [BeyondSimulations](https://beyondsimulations.com)
+[MIT](LICENSE)
